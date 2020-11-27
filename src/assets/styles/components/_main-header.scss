@@ -1,0 +1,31 @@
+.main-header{
+    border-bottom: 1px solid $clr2;
+    height: 54px;
+    background-color: $clr3;
+    position: sticky;
+    top: 0;
+    &-user{
+
+        margin-left: 20px;
+    }
+    .header-logo{
+        height: 30px;
+    }
+    &-inner{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: inherit;
+        svg{
+            margin-left: 20px;
+        }
+    }
+    &-search{
+        border: 1px solid $clr2;
+        background-color: $clr4;
+        padding: 4px;
+        width: 215px;
+        font-size: inherit;
+        border-radius: 3px;
+    }
+}

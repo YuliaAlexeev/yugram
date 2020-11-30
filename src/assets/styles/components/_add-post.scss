@@ -1,0 +1,30 @@
+.add-post {
+    width: 60px;
+    position: fixed;
+    right: 0;
+    bottom: 0; 
+    background-color: $clr3;
+    &-modal{
+        width: 600px;
+        background: $clr3;
+        margin: 0 auto;
+        &-title{
+            padding: 10px;
+        }
+        &-textarea {
+            padding: 10px;
+            border-top: 1px solid $clr2;
+        }
+        &-upload{
+            display: block;
+            text-align: center;
+            background: $clr2;
+            padding: 20px;
+        }
+        &-btn{
+            padding: 10px;
+            color: $clr5;
+            font-weight: 600;
+        }
+    }
+}

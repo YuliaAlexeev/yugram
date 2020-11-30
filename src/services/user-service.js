@@ -6,6 +6,7 @@ export default {
     signup,
     getUsers,
     getById,
+    getByUserName,
     remove,
     update
 }
@@ -14,6 +15,9 @@ function getUsers() {
 }
 function getById(userId) {
     return HttpService.get(`user/${userId}`)
+}
+function getByUserName(userName) {
+    return HttpService.get(`user?userName=${userName}`)
 }
 function remove(userId) {
     return HttpService.delete(`user/${userId}`)

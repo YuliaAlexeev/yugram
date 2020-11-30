@@ -1,28 +1,30 @@
-d<template>
-    <div class="post-preview">
-        <div class="post-preview-header">
-            <img
-                class="user-avatar avatar-md avatar"
-                :src=post.by.imgUrl
-                alt="profile pic"
-            />
-            <a href="#">{{post.by.userName}}</a>
+<template>
+    <div class="post-details" v-if="user">
+        <div class="post-details-header">
+            <router-link :to="`/${post.by.userName}`">
+                <img
+                    class="user-avatar avatar-md avatar"
+                    :src=post.by.imgUrl
+                    alt="profile pic"
+                />
+            </router-link>
+            <router-link :to="`/${post.by.userName}`">{{post.by.userName}}</router-link>
             <button class="more-options-btn">
                 <svg aria-label="More options" height="16" viewBox="0 0 48 48" width="16"><circle clip-rule="evenodd" cx="8" cy="24" fill-rule="evenodd" r="4.5"></circle><circle clip-rule="evenodd" cx="24" cy="24" fill-rule="evenodd" r="4.5"></circle><circle clip-rule="evenodd" cx="40" cy="24" fill-rule="evenodd" r="4.5"></circle></svg>
             </button>
         </div>
 
         <img
-            class="post-preview-img"
+            class="post-details-img"
             :src=post.imgUrl
             alt="post img"
             style="max-width: 615px; height: 745px"
         />
 
-        <div class="post-preview-content">
+        <div class="post-details-content">
             <div class="post-actions">
                 <button @click="addLike" class="post-actions-btn">
-                    <svg v-if="!like" class="nolike"
+                    <svg v-if="!getLike" class="nolike"
                         height="22"
                         viewBox="0 0 48 48"
                         width="22"
@@ -32,7 +34,7 @@ d<template>
                         />
                     </svg>
 
-                    <svg v-else class="like" :class="{likeAnimation: like}" height="24" viewBox="0 0 48 48" width="24"><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+                    <svg v-else class="like" :class="{likeAnimation: getLike}" height="24" viewBox="0 0 48 48" width="24"><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
                 </button>
                 <button class="post-actions-btn">
                     <svg
@@ -74,15 +76,12 @@ d<template>
                 </button>
             </div>
 
-
-           <!-- {{getUser}} -->
             
-            <div class="likes">
-              <button class="likes-btn active" @click="showLikesModal">{{post.likes.length}} likes</button>
+            <button class="post-likes-btn" v-if="post.likes.length > 0" @click="showLikesModal">{{post.likes.length}} likes</button>
               <div class="screen" v-show="isShownModal" @click="closeModal">
                 <div class="screen-box" >
                 <div class="screen-box-top">
-                    <h3 class="screen-box-top-title">Likes</h3>
+                    <h4 class="screen-box-top-title">Likes</h4>
                     <button class="close-btn" @click="closeModal">
                         <svg aria-label="Close" height="24" viewBox="0 0 48 48" width="24"><path clip-rule="evenodd" d="M41.1 9.1l-15 15L41 39c.6.6.6 1.5 0 2.1s-1.5.6-2.1 0L24 26.1l-14.9 15c-.6.6-1.5.6-2.1 0-.6-.6-.6-1.5 0-2.1l14.9-15-15-15c-.6-.6-.6-1.5 0-2.1s1.5-.6 2.1 0l15 15 15-15c.6-.6 1.5-.6 2.1 0 .6.6.6 1.6 0 2.2z" fill-rule="evenodd"></path></svg>
                     </button>
@@ -90,32 +89,31 @@ d<template>
                 <div class="screen-box-bottom">
                     <div v-for="like in post.likes" :key="like._id" class="screen-box-bottom-by" >
                         <img class="user-avatar avatar-lg avatar" :src="like.imgUrl" alt="profile pic"/>  
-                        <span class="author" :title="like.fullName">{{like.userName}}</span>
+                        <span class="post-row-username" :title="like.userName">{{like.userName}}
                         {{like.fullName}}
+                        </span>
                     </div>
                 </div>
               </div>
-              </div>
             </div>
-          
+    
+            
+   
+            <div class="post-row"><span class="post-row-username">{{post.by.userName}}</span>{{post.content}}</div>
 
-            <span class="author">{{post.by.fullName}}</span>{{post.content}}
-
-            <button class="show-comments-btn active" @click="isShowAllComments =! isShowAllComments">
+            <button class="show-comments-btn" v-if="slicedCommentsLength > 0" @click="isShowAllComments =! isShowAllComments">
                 View {{showMoreLess}} {{slicedCommentsLength}} comments
             </button>
-            <div v-for="comment in commentsToShow" :key="comment._id" class="by">
-                <span class="author" :title="comment.by.fullName">{{ comment.by.fullName }}</span>{{ comment.content }}
-
-                <!-- {{getCommentCreatedAt}} -->
-                <!-- <button class="remove">Remove</button> -->
+            <div class="post-row" v-for="comment in commentsToShow" :key="comment.id">
+                <span class="post-row-username" :title="comment.by.userName"><router-link :to="`/${comment.by.userName}`">{{ comment.by.userName }}</router-link></span>{{ comment.content }}
+                <button class="remove" v-if="isByLoggedUser(comment.by._id)" @click="removeComment(post, comment.id)">x</button>
             </div>
 
-            <time class="published-date">{{ getCreatedAt }}</time>
+            <time class="post-published-time">{{ getCreatedAt }}</time>
         </div>
-        <form @submit.prevent="addComment" class="post-preview-comment">
+        <form @submit.prevent="addComment" class="post-details-add-comment">
             <textarea v-model="commentToAdd.content" placeholder="Add a comment…"></textarea>
-            <button class="post-preview-comment-btn">Post</button>
+            <button class="post-details-add-comment-btn">Post</button>
         </form>
     </div>
 </template>
@@ -131,7 +129,7 @@ export default {
             //moment: moment,
             isShownModal: false,
             isShowAllComments: false,
-            like: false,
+            // like: false,
             user: null,
             commentToAdd: { content: '', createdAt: Date.now() }
         };
@@ -158,10 +156,13 @@ export default {
         showMoreLess(){
             return (!this.isShowAllComments)? 'all' : 'less'
         },
-        // getUser(){
-        //     // console.log('user get', this.$store.getters.getUser)
-        //     return this.$store.getters.getUser
-        // }
+        getLike(){
+            const res = this.post.likes.findIndex(userLike => userLike._id === this.user._id)
+            return res !== -1   
+        },
+        isByLoggedUser() {
+            return (commentById) => commentById === this.user._id
+        },
         
     },
     methods:{
@@ -182,8 +183,8 @@ export default {
             commentToAdd: { content: ''}
         },
         addLike(){
-            this.like = !this.like;
-            console.log('add like', this.like)
+            // this.like = !this.like;
+            // console.log('add like', this.like)
             this.$store.dispatch({
                 type: 'addLike',
                 // like: this.like,
@@ -191,6 +192,19 @@ export default {
                 user: this.user
             })
         },
+        removeComment(post, commentId){
+            console.log('details remove commentId', commentId)
+            console.log('details from post', postId)
+            const commentIdx = post.findIndex(comment => comment.id === commentId)
+            const postCopy = JSON.parse(JSON.stringify(post))
+            postCopy.splice(commentIdx, 1)
+
+            this.$store.dispatch({
+                type: 'updatePost',
+                updatedPost: postCopy
+            })
+
+        }
         // loadUser() {
         //     this.$store.dispatch({
         //         type: 'loadUser'

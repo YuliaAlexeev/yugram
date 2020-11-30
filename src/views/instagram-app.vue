@@ -5,28 +5,28 @@
         <div class="user-profile">
           {{getUser.userName}}
           {{getUser.fullName}}
-          {{getUser.imgUrl}}
+          <img class="avatar-lg avatar" :src="getUser.imgUrl" />
         </div>
           <!-- {{postsToShow}} -->
-         
-          <router-link to="/create" class="add-post"> 
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477.867 477.867"><path d="M392.533 0h-307.2C38.228.056.056 38.228 0 85.333v307.2c.056 47.105 38.228 85.277 85.333 85.333h307.2c47.105-.056 85.277-38.228 85.333-85.333v-307.2C477.81 38.228 439.638.056 392.533 0zm51.2 392.533c0 28.277-22.923 51.2-51.2 51.2h-307.2c-28.277 0-51.2-22.923-51.2-51.2v-307.2c0-28.277 22.923-51.2 51.2-51.2h307.2c28.277 0 51.2 22.923 51.2 51.2v307.2z"/><path d="M324.267 221.867H256V153.6c0-9.426-7.641-17.067-17.067-17.067s-17.067 7.641-17.067 17.067v68.267H153.6c-9.426 0-17.067 7.641-17.067 17.067S144.174 256 153.6 256h68.267v68.267c0 9.426 7.641 17.067 17.067 17.067S256 333.692 256 324.267V256h68.267c9.426 0 17.067-7.641 17.067-17.067s-7.642-17.066-17.067-17.066z"/></svg>
-          </router-link>
+      
+        <svg @click="showCloseModal" class="add-post" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 477.867 477.867"><path d="M392.533 0h-307.2C38.228.056.056 38.228 0 85.333v307.2c.056 47.105 38.228 85.277 85.333 85.333h307.2c47.105-.056 85.277-38.228 85.333-85.333v-307.2C477.81 38.228 439.638.056 392.533 0zm51.2 392.533c0 28.277-22.923 51.2-51.2 51.2h-307.2c-28.277 0-51.2-22.923-51.2-51.2v-307.2c0-28.277 22.923-51.2 51.2-51.2h307.2c28.277 0 51.2 22.923 51.2 51.2v307.2z"/><path d="M324.267 221.867H256V153.6c0-9.426-7.641-17.067-17.067-17.067s-17.067 7.641-17.067 17.067v68.267H153.6c-9.426 0-17.067 7.641-17.067 17.067S144.174 256 153.6 256h68.267v68.267c0 9.426 7.641 17.067 17.067 17.067S256 333.692 256 324.267V256h68.267c9.426 0 17.067-7.641 17.067-17.067s-7.642-17.066-17.067-17.066z"/></svg>
+        <add-post v-show="isShowAddPostModal" @closeModal="showCloseModal" @addPost="doAddPost"></add-post>
     </section>
-  
 </template>
 
 <script>
 import postList from '@/cmps/post-list.vue'
+import addPost from '@/cmps/add-post.vue'
+
 // import {eventBus, EVENT_REMOVE_TOY} from '@/services/event-bus-service.js'
 
 export default{
   name: 'instagram-app',
-  created(){
-    this.loadPosts(); 
-    console.log('this.loadUser(); ', this.loadUser())
+  data(){
+    return {
+      isShowAddPostModal: false,
+    }
   },
-
   computed:{
       isLoading(){
         return this.$store.getters.isLoading
@@ -48,11 +48,26 @@ export default{
       this.$store.dispatch({
         type: 'loadUser'
       })
+    },
+    doAddPost(postToAdd){
+      console.log('adding new post', postToAdd);
+      this.$store.dispatch({
+          type: 'addPost',
+          postToAdd
+      })
+      postToAdd= { content: '', createdAt: '', imgUrl: ''}
+    },
+    showCloseModal(){
+      this.isShowAddPostModal= !this.isShowAddPostModal;
     }
   },
-
+  created(){
+    this.loadPosts();
+    this.loadUser();
+  },
   components:{
-   postList
+   postList,
+   addPost
   }
 }
 </script>

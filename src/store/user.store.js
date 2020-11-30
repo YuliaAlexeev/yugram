@@ -7,10 +7,9 @@ export const userStore = {
 
     },
     getters: {
-        getUser(state) {
-          console.log('getters user', state.user)
-            return state.user;
-        },
+      getUser(state) {
+          return state.user;
+      },
     //   getLoggedInUser(state) {
     //       return state.user;
     //   },
@@ -42,7 +41,7 @@ export const userStore = {
     //   },
       async loadUser({commit} ,{userId}){
         const user = await userService.getById('u101')
-        console.log('user from db',user)
+        console.log('user from db on loadUser', user)
         commit({type: 'setUser', user})
       }
     },

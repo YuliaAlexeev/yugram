@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/instagram-app.vue'
-import addPost from '../views/add-post.vue'
 import postsPage from '../views/posts-page.vue'
+import userDetails from '../views/user-details.vue';
+import userConnection from '../views/user-connection.vue'
 
 Vue.use(VueRouter)
 
@@ -12,8 +13,8 @@ const routes = [
     component: Home
   },
   {
-    path: '/create',
-    component: addPost
+    path: '/:userName',
+    component: userDetails
   },
   {
     path: '/explore',

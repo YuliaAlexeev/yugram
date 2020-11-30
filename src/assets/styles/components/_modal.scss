@@ -9,17 +9,27 @@
     display: -ms-flexbox;
     display: flex;
     align-items: center;
+    &-close-btn{
+        position: absolute;
+        right: 30px;
+        top: 15px;
+        svg{
+            fill: $clr3;
+        }
+    }
     &-box{
         width: 400px;
         background: $clr3;
         margin: 0 auto;
         border-radius: 12px;
+        overflow: hidden;
         &-top{
             display: flex;
             align-items: center;
             text-align: center;
             border-bottom: 1px solid $clr2;
             padding: 10px 16px;
+            position: relative;
             &-title{
                 font-weight: 600;
                 font-size: 16px;
@@ -30,9 +40,27 @@
             padding: 16px;
             overflow: hidden auto;
             height: 350px;
-            &-by{
-                margin-bottom: 16px;
+        }
+    }
+    &-row{
+        margin-bottom: 16px;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        &-name{
+            &-username{
+                font-weight: 600;
+            }
+            &-fullname{
+                color: $clr6;
             }
         }
     }
 }
+
+.close-btn{
+    position: absolute;
+    right: 11px;
+    top: 8px;
+}
+

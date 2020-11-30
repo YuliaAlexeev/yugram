@@ -1,6 +1,5 @@
 <template>
-  <div id="app" class="main-layout">
-  <section class="user-connection" v-if="!getUser">
+  <section class="user-connection" >
       <img src="@/assets/user-connection.png" />
       <div class="connection">
           <h1 class="main-header-inner-logo">Instayul</h1>
@@ -11,25 +10,16 @@
           <button class="continue-as-btn">continue</button>
       </div>
   </section>
-
-    <main-header />
-    <router-view />
-    <footer class="main-footer">Coffee Rights 2020 Made By Yulia Alexeev</footer>
-  </div>
 </template>
-<script>
-import mainHeader from '@/cmps/main-header.vue'
 
+<script>
+import userService from '@/services/user-service.js';
 export default {
-  name: 'App',
-   computed:{
+
+      computed:{
       getUser(){
             return this.$store.getters.getUser
         }
      },
-  components: {
-    mainHeader
-  }
 }
-
 </script>

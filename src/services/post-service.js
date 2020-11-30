@@ -5,7 +5,9 @@ export const postService = {
     getById,
     remove,
     update,
-    _makeId
+    _makeId,
+    getByUserId,
+    add
 }
 
 function getPosts() {
@@ -16,12 +18,20 @@ function getById(postId) {
     return HttpService.get(`post/${postId}`)
 }
 
+function getByUserId(userId) {
+    return HttpService.get(`post?by._id=${userId}`)
+}
+
 function remove(postId) {
     return HttpService.delete(`post/${postId}`)
 }
 
 function update(post) {
     return HttpService.put(`post/${post._id}`, post)
+}
+
+function add(post) {
+    return HttpService.post('post', post)
 }
 
 function _makeId(length = 5) {
@@ -32,7 +42,3 @@ function _makeId(length = 5) {
     }
     return txt;
 }
-
-// function add(comment) {
-//     return HttpService.post(`post`, comment)
-// }

@@ -1,6 +1,6 @@
 <template>
-   <header class="main-header full">
-      <div class="main-header-inner container">
+   <header class="main-header full main-layout">
+      <div class="main-header-inner">
         <router-link to="/">
           <h1 class="main-header-inner-logo">Instayul</h1>
         </router-link>

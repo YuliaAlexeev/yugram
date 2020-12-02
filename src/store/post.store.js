@@ -13,11 +13,9 @@ export const postStore = {
             return state.isLoading;
         },
         getPosts(state) {
-            console.log('all posts', state.posts)
             return state.posts;
         },
         getPostsOfUser(state){
-            console.log('post of user', state.userPosts)
             return state.userPosts;
         }
     },
@@ -45,26 +43,24 @@ export const postStore = {
             }
         },
         setPostsOfUser(state, {userPosts}){
-            console.log('setPostsOfUser',userPosts)
             state.userPosts = userPosts;
         },
-        removeComment(state, { commentId, postIdx }){    
-            console.log('mutatios comment Id', commentId)   
-            console.log('mutatios post Id', postIdx)   
+        removeComment(state, { commentId, postIdx }){      
             state.posts[postIdx].comments.splice(commentId, 1)
         },
         addPost(state, {postToAdd}){
-            console.log('new post mutations', postToAdd)
-            const miniUser = {_id: 'u101', userName: 'yulia.a', imgUrl: 'https://picsum.photos/id/305/200/300'}
-            postToAdd.by = miniUser    
             state.posts.unshift(postToAdd)
+        },
+        updatePost(state, {updatedPost}){
+            const postIdx = state.posts.findIndex(post => post._id === updatedPost._id)
+            console.log('index', postIdx)
+            state.posts.splice(postIdx, 1, updatedPost)
         }
     },
 
     actions: {
         async loadPosts({ state, commit }) {
             commit({ type: 'setIsLoading', isLoading: true });
-            //const postByUser = userService.getById
             const posts = await postService.getPosts();
             setTimeout(() => {
                 commit({ type: 'setPosts', posts });
@@ -83,35 +79,27 @@ export const postStore = {
         },
 
         async addLike({ state, commit }, {postId, user}){
-            
-            //console.log('payload', payload)
             const postIdx = state.posts.findIndex(post => post._id === postId)
-            commit({type: 'setLike', postIdx, user})
-           
+            commit({type: 'setLike', postIdx, user})  
             await postService.update(state.posts[postIdx])
-            //return comment;
         },
         async loadPostsOfUser({commit}, { user }) {
-            // console.log('loadPostsOfUser store commit',commit )
-            // console.log('loadPostsOfUser store payload',user._id )
             const userPosts = await postService.getByUserId(user._id)
             commit({type: 'setPostsOfUser', userPosts })
-             console.log('userPosts in store', userPosts)
-            return userPosts;
-             
+            return userPosts;    
         },
 
         async updatePost({ commit }, { updatedPost }){
             
-            await postService.update(updatedPost)
+            updatedPost = await postService.update(updatedPost)
             commit({ type: 'updatePost', updatedPost }) // replace the post (find the idx first) with the updatedPost
            
         },
 
         async addPost({ commit }, { postToAdd }){
-            console.log('postToAdd store', postToAdd)
+            //console.log('postToAdd store', postToAdd)
             postToAdd = await postService.add(postToAdd)
-            console.log('post from db:', postToAdd);
+            //console.log('post from db:', postToAdd);
             commit({ type: 'addPost', postToAdd })
             return postToAdd
         },

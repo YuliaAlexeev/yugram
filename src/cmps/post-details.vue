@@ -18,7 +18,6 @@
             class="post-details-img"
             :src=post.imgUrl
             alt="post img"
-            style="max-width: 615px; height: 745px"
         />
 
         <div class="post-details-content">
@@ -36,9 +35,8 @@
 
                     <svg v-else class="like" :class="{likeAnimation: getLike}" height="24" viewBox="0 0 48 48" width="24"><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
                 </button>
-                <button class="post-actions-btn">
+                <button @click="addCommentBtn" class="post-actions-btn">
                     <svg
-                        aria-label="Comment"
                         height="24"
                         viewBox="0 0 48 48"
                         width="24"
@@ -105,14 +103,18 @@
                 View {{showMoreLess}} {{slicedCommentsLength}} comments
             </button>
             <div class="post-row" v-for="comment in commentsToShow" :key="comment.id">
-                <span class="post-row-username" :title="comment.by.userName"><router-link :to="`/${comment.by.userName}`">{{ comment.by.userName }}</router-link></span>{{ comment.content }}
+                <span class="post-row-username" :title="comment.by.userName">
+                    <router-link :to="`/${comment.by.userName}`">{{ comment.by.userName }}</router-link>
+                </span>
+                {{ comment.content }}
+             
                 <button class="remove" v-if="isByLoggedUser(comment.by._id)" @click="removeComment(post, comment.id)">x</button>
             </div>
 
             <time class="post-published-time">{{ getCreatedAt }}</time>
         </div>
         <form @submit.prevent="addComment" class="post-details-add-comment">
-            <textarea v-model="commentToAdd.content" placeholder="Add a comment…"></textarea>
+            <textarea v-model="commentToAdd.content" ref="comment" @keyup.enter="addComment" placeholder="Add a comment…"></textarea>
             <button class="post-details-add-comment-btn">Post</button>
         </form>
     </div>
@@ -126,21 +128,17 @@ export default {
     props: ['post'],
     data() {
         return {
-            //moment: moment,
             isShownModal: false,
             isShowAllComments: false,
-            // like: false,
             user: null,
             commentToAdd: { content: '', createdAt: Date.now() }
         };
     },
     computed: {
         getCreatedAt() {
-            //console.log('this.post.createdAt', this.post.createdAt);
             return moment(this.post.createdAt).fromNow();
         },
         getCommentCreatedAt() {
-            //console.log('this.post.createdAt', this.post.createdAt);
             return moment(this.post.comments.createdAt).fromNow();
         },
         commentsToShow(){
@@ -180,24 +178,26 @@ export default {
                 postId: this.post._id,
                 user: this.user
             })
-            commentToAdd: { content: ''}
+            this.commentToAdd= { content: ''}
+        },
+        addCommentBtn(){
+            this.$refs.comment.focus()
+
         },
         addLike(){
-            // this.like = !this.like;
-            // console.log('add like', this.like)
             this.$store.dispatch({
                 type: 'addLike',
-                // like: this.like,
                 postId: this.post._id,
                 user: this.user
             })
         },
         removeComment(post, commentId){
             console.log('details remove commentId', commentId)
-            console.log('details from post', postId)
-            const commentIdx = post.findIndex(comment => comment.id === commentId)
+            console.log('details from post', post)
+            const commentIdx = post.comments.findIndex(comment => comment.id === commentId)
+            console.log('commentIdx in find', commentIdx)
             const postCopy = JSON.parse(JSON.stringify(post))
-            postCopy.splice(commentIdx, 1)
+            postCopy.comments.splice(commentIdx, 1)
 
             this.$store.dispatch({
                 type: 'updatePost',
@@ -205,17 +205,11 @@ export default {
             })
 
         }
-        // loadUser() {
-        //     this.$store.dispatch({
-        //         type: 'loadUser'
-        //     })
-        // }
         
     },
     async created() {
      const user = await userService.getById('u101')
      this.user = user;
-     console.log('user', this.user)
     },
 };
 </script>

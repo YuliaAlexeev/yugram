@@ -1,4 +1,5 @@
 // SETUP
+@import 'setup/mixins';
 @import 'setup/typography';
 @import 'setup/variables';
 
@@ -10,9 +11,9 @@
 @import 'components/post-details';
 @import 'components/main-footer';
 @import 'components/main-header';
-@import 'components/comment';
 @import 'components/modal';
 @import 'components/add-post';
+@import 'components/post-modal';
 
 // VIEWS
 @import 'views/user-details';

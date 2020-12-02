@@ -41,7 +41,6 @@ export const userStore = {
     //   },
       async loadUser({commit} ,{userId}){
         const user = await userService.getById('u101')
-        console.log('user from db on loadUser', user)
         commit({type: 'setUser', user})
       }
     },

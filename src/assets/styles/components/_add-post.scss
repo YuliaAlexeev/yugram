@@ -1,13 +1,18 @@
 .add-post {
-    width: 60px;
-    position: fixed;
-    right: 0;
-    bottom: 0; 
-    background-color: $clr3;
+    &-btn{
+        width: 40px;
+        position: fixed;
+        right: 10px;
+        bottom: 10px;
+        background-color: $clr3;
+    }
     &-modal{
         width: 600px;
         background: $clr3;
         margin: 0 auto;
+        svg{
+            width: 40px;
+        }
         &-title{
             padding: 10px;
         }
@@ -16,10 +21,15 @@
             border-top: 1px solid $clr2;
         }
         &-upload{
-            display: block;
-            text-align: center;
             background: $clr2;
-            padding: 20px;
+            height: 340px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        &-img{
+            max-height: 340px;
+            object-fit: cover;
         }
         &-btn{
             padding: 10px;

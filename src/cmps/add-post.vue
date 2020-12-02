@@ -10,7 +10,7 @@
             <img v-if="isLoading" src="@/assets/loader.svg" class="main-loader" />
             <template v-else-if="!isImgLoaded">
                 <label class="add-post-modal-upload" for="imgUploader">
-                    <svg height="100px" viewBox="0 -18 512 512" width="100px" xmlns="http://www.w3.org/2000/svg"><path d="M432 0H80C35.887 0 0 35.887 0 80v280c0 44.113 35.887 80 80 80h273c11.047 0 20-8.953 20-20s-8.953-20-20-20h-73.664l-45.984-59.656 145.722-185.348 98.098 108.422a19.994 19.994 0 0022.02 5.246A20.01 20.01 0 00512 250V80c0-44.113-35.887-80-80-80zm40 198.086l-79.168-87.504a19.97 19.97 0 00-15.523-6.57 20.02 20.02 0 00-15.032 7.629L208.16 307.664l-52.32-67.875A20.002 20.002 0 00140 232h-.012a20 20 0 00-15.84 7.805l-44.015 57.218c-6.735 8.758-5.098 21.313 3.656 28.047 8.758 6.739 21.313 5.098 28.05-3.656l28.177-36.633L228.832 400H80c-22.055 0-40-17.945-40-40V80c0-22.055 17.945-40 40-40h352c22.055 0 40 17.945 40 40zm0 0"/><path d="M140 72c-33.086 0-60 26.914-60 60s26.914 60 60 60 60-26.914 60-60-26.914-60-60-60zm0 80c-11.027 0-20-8.973-20-20s8.973-20 20-20 20 8.973 20 20-8.973 20-20 20zm0 0M468.477 302.941c-.059-.058-.118-.12-.176-.18-9.453-9.519-22.028-14.761-35.41-14.761-13.344 0-25.883 5.21-35.325 14.676l-38.613 38.086c-7.863 7.754-7.95 20.418-.191 28.281 7.754 7.863 20.418 7.953 28.281.195l25.848-25.492V456c0 11.047 8.953 20 20 20s20-8.953 20-20V344.355l24.738 25.555A19.93 19.93 0 00492 376a19.939 19.939 0 0013.91-5.629c7.938-7.683 8.14-20.344.457-28.281zm0 0"/></svg>
+                    <svg viewBox="0 -18 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M432 0H80C35.887 0 0 35.887 0 80v280c0 44.113 35.887 80 80 80h273c11.047 0 20-8.953 20-20s-8.953-20-20-20h-73.664l-45.984-59.656 145.722-185.348 98.098 108.422a19.994 19.994 0 0022.02 5.246A20.01 20.01 0 00512 250V80c0-44.113-35.887-80-80-80zm40 198.086l-79.168-87.504a19.97 19.97 0 00-15.523-6.57 20.02 20.02 0 00-15.032 7.629L208.16 307.664l-52.32-67.875A20.002 20.002 0 00140 232h-.012a20 20 0 00-15.84 7.805l-44.015 57.218c-6.735 8.758-5.098 21.313 3.656 28.047 8.758 6.739 21.313 5.098 28.05-3.656l28.177-36.633L228.832 400H80c-22.055 0-40-17.945-40-40V80c0-22.055 17.945-40 40-40h352c22.055 0 40 17.945 40 40zm0 0"/><path d="M140 72c-33.086 0-60 26.914-60 60s26.914 60 60 60 60-26.914 60-60-26.914-60-60-60zm0 80c-11.027 0-20-8.973-20-20s8.973-20 20-20 20 8.973 20 20-8.973 20-20 20zm0 0M468.477 302.941c-.059-.058-.118-.12-.176-.18-9.453-9.519-22.028-14.761-35.41-14.761-13.344 0-25.883 5.21-35.325 14.676l-38.613 38.086c-7.863 7.754-7.95 20.418-.191 28.281 7.754 7.863 20.418 7.953 28.281.195l25.848-25.492V456c0 11.047 8.953 20 20 20s20-8.953 20-20V344.355l24.738 25.555A19.93 19.93 0 00492 376a19.939 19.939 0 0013.91-5.629c7.938-7.683 8.14-20.344.457-28.281zm0 0"/></svg>
                 </label>
                 <input
                     type="file"
@@ -19,7 +19,7 @@
                     @change="onUploadImg"
                 />
             </template>        
-            <img :src="postToAdd.imgUrl" />
+            <img :src="postToAdd.imgUrl" class="add-post-modal-img" />
             <button class="add-post-modal-btn">Add</button>
         </form>
     </div>
@@ -34,8 +34,8 @@ export default {
             isLoading: false,
             imgUrl: null,
             isImgLoaded: false,
-            isShownModal: false,
-            postToAdd: { content: '', createdAt: Date.now(), imgUrl: this.imgUrl, by: null, comments: [], likes: [] }
+            postToAdd: { content: '', createdAt: Date.now(), imgUrl: this.imgUrl, comments: [], likes: [] }
+            // postToAdd: postService.getEmpty()
         }
     },
     components:{
@@ -44,17 +44,19 @@ export default {
         async onUploadImg(ev){
             this.isLoading = true;
             const res = await uploadImg(ev)
+        console.log('img',res.url)
             this.postToAdd.imgUrl = res.url;
             this.isLoading = false;
-            this.isImgLoaded=true;
+            this.isImgLoaded = true;
+            
         },
         addPost(){
             this.$emit('addPost', this.postToAdd);
-            
-
+            this.postToAdd = { content: '', createdAt: null, imgUrl: ''}
+            this.closeModal();
         },
-        closeModal(){
-            this.$emit('closeModal', this.isShownModal);
+        closeModal() {
+            this.$emit('closeAddPostModal');
         }
     }
 };

@@ -1,40 +1,62 @@
 .add-post {
-    &-btn{
+    &-btn {
         width: 40px;
+        height: 40px;
         position: fixed;
-        right: 10px;
-        bottom: 10px;
+        right: 15px;
+        bottom: 15px;
         background-color: $clr3;
     }
-    &-modal{
+    &-modal {
+        font-size: 13px;
         width: 600px;
+        border-radius: 3px;
         background: $clr3;
         margin: 0 auto;
-        svg{
+        animation: appear 350ms ease-in 1;
+        svg {
             width: 40px;
         }
-        &-title{
-            padding: 10px;
+        &-title {
+            padding: 16px;
+            font-weight: 600;
         }
         &-textarea {
-            padding: 10px;
+            padding: 16px;
             border-top: 1px solid $clr2;
+            border-bottom: 1px solid $clr2;
+            display: block;
         }
-        &-upload{
-            background: $clr2;
+        &-loader {
             height: 340px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        &-img{
+        &-upload {
+            height: 340px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        &-img {
             max-height: 340px;
             object-fit: cover;
+            border-bottom: 1px solid $clr2;
         }
-        &-btn{
-            padding: 10px;
-            color: $clr5;
-            font-weight: 600;
+        &-btn {
+            padding: 16px;
+            svg{
+                fill: $clr5;
+            }
         }
+    }
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
     }
 }

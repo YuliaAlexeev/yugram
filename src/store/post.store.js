@@ -28,7 +28,7 @@ export const postStore = {
         },
         addComment(state, { comment, postIdx, user }){
             const miniUser = {_id: user._id, userName: user.userName, imgUrl: user.imgUrl}
-            comment.by = miniUser        
+            comment.by = miniUser
             state.posts[postIdx].comments.unshift(comment)
         },
         setLike(state, {postIdx, user }){
@@ -68,6 +68,7 @@ export const postStore = {
             }, 500);
         },
         async addComment({ state, commit }, { comment, postId, user }){
+            console.log('add comment in store', comment, postId, user);
             // console.log('postId', postId)
             // 1. find post idx. 2. add the comment to the post. 3. send the updated post to the json-server (put).
       // console.log('payload', payload)

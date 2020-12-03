@@ -1,5 +1,4 @@
 .profile{
-    max-width: 715px;
     padding: 0 60px;
     display: flex;
     @include for-max-normal-layout{
@@ -23,11 +22,8 @@
             width: 80px;
             height: 80px;
         }
-
-       
     }
     &-description{
-        max-width: 340px;
         font-size: 15px;
         flex: 1;
         &-top{
@@ -39,7 +35,13 @@
         &-bio{
             padding-top: 14px;
         }
-        
+    }
+    &-count{
+        margin-right: 30px;
+        &-num{
+            font-weight: 600;
+            font-size: 15px;
+        }
     }
     &-posts{
         display: grid;

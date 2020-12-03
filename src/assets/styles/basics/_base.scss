@@ -7,9 +7,7 @@ body {
     line-height: 1.8;
     color: $clr1;
     margin: 0;
-    @include for-narrow-layout{
-        background-color: $clr4;
-    }
+    background-color: $clr4;
 }
 
 h1, h2, h3, h4, h5, h6 {

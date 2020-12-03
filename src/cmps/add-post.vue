@@ -8,10 +8,10 @@
     <form class="add-post-modal" @submit.prevent="addPost">
       <h4 class="add-post-modal-title">New post</h4>
       <textarea class="add-post-modal-textarea" v-model="postToAdd.content" placeholder="Write something..."></textarea>
-      <div class="add-post-modal-loader" v-if="isLoading">
+      <div class="add-post-modal-loader" v-if="isUploading">
         <img src="@/assets/loader.svg" class="main-loader" />
       </div>
-      <template v-else-if="!isImgLoaded">
+      <template v-else-if="!postToAdd.imgUrl">
         <label class="add-post-modal-upload" for="imgUploader">
           <svg viewBox="0 -18 512 512" xmlns="http://www.w3.org/2000/svg">
             <path d="M432 0H80C35.887 0 0 35.887 0 80v280c0 44.113 35.887 80 80 80h273c11.047 0 20-8.953 20-20s-8.953-20-20-20h-73.664l-45.984-59.656 145.722-185.348 98.098 108.422a19.994 19.994 0 0022.02 5.246A20.01 20.01 0 00512 250V80c0-44.113-35.887-80-80-80zm40 198.086l-79.168-87.504a19.97 19.97 0 00-15.523-6.57 20.02 20.02 0 00-15.032 7.629L208.16 307.664l-52.32-67.875A20.002 20.002 0 00140 232h-.012a20 20 0 00-15.84 7.805l-44.015 57.218c-6.735 8.758-5.098 21.313 3.656 28.047 8.758 6.739 21.313 5.098 28.05-3.656l28.177-36.633L228.832 400H80c-22.055 0-40-17.945-40-40V80c0-22.055 17.945-40 40-40h352c22.055 0 40 17.945 40 40zm0 0" />
@@ -34,9 +34,8 @@ export default {
   name: "add-post",
   data() {
     return {
-      isLoading: false,
+      isUploading: false,
       imgUrl: null,
-      isImgLoaded: false,
       postToAdd: {
         content: "",
         createdAt: Date.now(),
@@ -50,12 +49,11 @@ export default {
   components: {},
   methods: {
     async onUploadImg(ev) {
-      this.isLoading = true;
+      this.isUploading = true;
       const res = await uploadImg(ev);
       console.log("img", res.url);
       this.postToAdd.imgUrl = res.url;
-      this.isLoading = false;
-      this.isImgLoaded = true;
+      this.isUploading = false;
     },
     addPost() {
       if (this.postToAdd.imgUrl === undefined) return;

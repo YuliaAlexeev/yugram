@@ -4,7 +4,7 @@
       {{ post.likes.length }} likes
     </button>
 
-    <users-modal @click.prevent="toggleModal" v-show="isShownModal">
+    <users-modal @closeModal="toggleModal" v-show="isShownModal">
       <h4 slot="title" class="screen-box-top-title">Likes</h4>
       <div slot="users" :user="post.likes" v-for="like in post.likes" :key="like._id" class="screen-row">
         <img class="user-avatar avatar-lg avatar" :src="like.imgUrl" alt="profile pic" />
@@ -31,10 +31,9 @@ export default {
     toggleModal() {
       this.isShownModal = !this.isShownModal;
     },
-    // closeModal() {
-    //   //todo emit
-    //   console.log("close");
-    // },
+    closeModal() {
+      this.isShownModal = null;
+    },
   },
   components:{
     usersModal

@@ -1,5 +1,5 @@
 <template>
-  <main class="main" v-if="user">
+  <main class="main" v-if="user ">
     <section class="profile">
       <img class="profile-img avatar" :src="user.imgUrl" />
 
@@ -101,6 +101,7 @@ export default {
     },
     methods:{
         loadPostsOfUser(){
+          // console.log('loadPostOfUser',this.user)
             this.$store.dispatch({
                 type: 'loadPostsOfUser',
                 user: this.user
@@ -111,13 +112,22 @@ export default {
         },
         toggleFollowingModal(){
             this.isShownFollowingModal= !this.isShownFollowingModal;
+        },
+        onFollow(){
+          // this.$store.dispatch({
+      //   type: "onFollow",
+      //   followedUser: this.user,
+      //   loggedInUser: this.loggedInUser
+      // });
         }
     },
     async created() {
         const userName = this.$route.params.userName;
         const user = await userService.getByUserName(userName);
         this.user = user[0];
+        console.log('this user', this.user)
         this.loadPostsOfUser();
+        
 
     },
     watch: {

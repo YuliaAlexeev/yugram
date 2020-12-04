@@ -2,23 +2,15 @@
     padding: 0 60px;
     display: flex;
     @include for-max-normal-layout{
-        padding: 0 30px
+        padding: 0 16px
     }
-    // @include for-mobile-layout {
-    //     padding: 0 30px;
-    // }
     &-img{
         width: 150px;
         height: 150px;
-        margin-right: 102px;
+        margin-right: 12%;
         object-fit: cover;
         @include for-max-normal-layout {
-            margin-right: 50px;
-            width: 120px;
-            height: 120px; 
-        }
-        @include for-mobile-layout {
-            margin-right: 30px;
+            margin-right: 16px;
             width: 80px;
             height: 80px;
         }
@@ -29,15 +21,20 @@
         &-top{
             padding: 10px 0 15px;
             &-username{
-                font-weight: 200;
+                font-size: 25px;
             }
         }
         &-bio{
             padding-top: 14px;
         }
     }
-    &-count{
-        margin-right: 30px;
+    &-count{    
+        &:not(:first-child){
+            margin-left: 30px;
+            @include for-max-normal-layout{
+                margin-left: 15px;
+            }
+        }
         &-num{
             font-weight: 600;
             font-size: 15px;
@@ -48,9 +45,6 @@
         grid-template-columns: repeat(3, 1fr);
         grid-gap: 30px;
         @include for-max-normal-layout {
-            grid-gap: 10px;
-        }
-        @include for-mobile-layout {
             grid-gap: 2px;
         }
         &-item{

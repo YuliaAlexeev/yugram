@@ -8,15 +8,15 @@
     <div class="post-modal">
       <img class="post-modal-img" :src=userPost.imgUrl alt="post img" />
       <div class="post-modal-right">
-        <post-header :post="userPost"></post-header>
-        <post-author :post="userPost"></post-author>
+        <post-header :post="userPost" :user="loggedInUser" ></post-header>
+        <post-author class="post-modal-author" :post="userPost"></post-author>
         <post-comments class="post-modal-comments" :comments="userPost.comments" :user="userPost.by"></post-comments>
         <div class="post-modal-bottom">
-            <post-actions :post="userPost" :user="user"></post-actions>
+            <post-actions :post="userPost" :user="loggedInUser"></post-actions>
             <post-likes :post="userPost"></post-likes>
             <post-time :post="userPost"></post-time>
         </div>
-        <add-comment :post="userPost" :user="user"></add-comment>
+        <add-comment :post="userPost" :user="loggedInUser"></add-comment>
       </div>
     </div>
   </div>
@@ -38,19 +38,18 @@ export default {
   props: ["userPost"],
   data() {
     return {
-      user: null,
+      // user: null,
     };
   },
-
   methods: {
     closePostModal() {
       this.$emit("closePostModal");
     },
   },
-  async created() {
-    console.log("YES USER INSIDE POST MODAL", this.user);  
-    const user = await userService.getById("u101");
-    this.user = user;
+  computed: {
+    loggedInUser() {
+      return this.$store.getters.loggedInUser;
+    },
   },
   components: {
     postHeader,

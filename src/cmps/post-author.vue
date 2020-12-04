@@ -1,6 +1,6 @@
 <template>
   <div class="post-row">
-    <span class="post-row-username">{{ post.by.userName }}</span>{{ post.content }}
+    <span v-if="post.content" class="post-row-username">{{ post.by.userName }}</span>{{ post.content }}
   </div>
 </template>
 

@@ -1,0 +1,16 @@
+.post-options{
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    &-btn{
+        padding: 16px 0;
+        border-bottom: 1px solid $clr2;
+        &.btn-remove{
+            font-weight: 600;
+            color: $clr7;
+        }
+        &:active{
+            background-color: $clr2;
+        }
+    }
+}

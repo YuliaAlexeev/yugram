@@ -3,19 +3,13 @@ import userService from "../services/user-service";
 export const userStore = {
     state: {
       strict: true,
-      user: [],
+      user: null,
 
     },
     getters: {
-      getUser(state) {
+      loggedInUser(state) {
           return state.user;
       },
-    //   getLoggedInUser(state) {
-    //       return state.user;
-    //   },
-
-   
-      
     },
     mutations: {
       setUser(state, { user }) {
@@ -25,6 +19,19 @@ export const userStore = {
       setLogout(state){
         console.log('state.user', state.users)
         state.users = null;
+      },
+      setOnFollow(state, {followedUser, loggedInUser }){
+        //let followedUserId = followedUser._id;
+        console.log('followedUser mutatuion', followedUser._id)
+
+        // const miniUser = {_id: loggedInUser._id, userName: loggedInUser.userName, imgUrl: loggedInUser.imgUrl}
+        // const userIsExist = state.users[followedUserId].followers.findIndex(followedUserId => followedUserId === loggedInUser._id)
+        
+        // if(userIsExist === -1){
+        //     state.users[followedUserId].followers.unshift(miniUser)
+        // } else {
+        //     state.users[followedUserId].followers.shift(miniUser)
+        // }
       }
     },
     actions: {
@@ -41,7 +48,14 @@ export const userStore = {
     //   },
       async loadUser({commit} ,{userId}){
         const user = await userService.getById('u101')
+        console.log('user store', user)
         commit({type: 'setUser', user})
-      }
+      },
+      // async onFollow({commit} , {followedUser, loggedInUser}){
+      //   //console.log(followedUser, loggedInUser)
+      //   const updatedUser = await userService.update(followedUser)
+      //   console.log('after update', updatedUser) 
+      //   commit({type: 'setOnFollow', updatedUser, loggedInUser})
+      // }
     },
 };

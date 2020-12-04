@@ -1,6 +1,6 @@
 <template>
   <div class="post-details" v-if="user">
-    <post-header :post="post"></post-header>
+    <post-header :post="post" :user="user"></post-header>
     <img class="post-details-img" :src="post.imgUrl" alt="post img" />
     <div class="post-details-content">
       <post-actions :post="post" :user="user"></post-actions>
@@ -26,7 +26,6 @@ import postActions from "@/cmps/post-actions";
 import postTime from "@/cmps/post-time";
 import postAuthor from "@/cmps/post-author";
 
-
 export default {
   name: "post-details",
   props: ["post"],
@@ -43,13 +42,13 @@ export default {
       return moment(this.post.comments.createdAt).fromNow();
     },
     commentsToShow() {
-    const comentsToShow = [...this.post.comments];
-    comentsToShow.reverse()
+    const commentsToShow = [...this.post.comments];
+    commentsToShow.reverse()
 
       if (this.post.comments.length > 2 && !this.isShowAllComments) {
-        return comentsToShow.slice(comentsToShow.length -2 ,comentsToShow.length);
+        return commentsToShow.slice(commentsToShow.length -2 ,commentsToShow.length);
       } else {
-        return comentsToShow;
+        return commentsToShow;
       }
     },
     slicedCommentsLength() {

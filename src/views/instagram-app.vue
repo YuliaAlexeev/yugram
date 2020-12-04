@@ -1,11 +1,12 @@
 <template>
     <section class="main home-page">
         <post-list v-if="!isLoading" :posts="postsToShow" />
+        <!-- <infinite-loading></infinite-loading> -->
         <img v-if="isLoading" class="main-loader" src="@/assets/loader.svg" />
         <!-- <div class="main-user-profile">
-          {{getUser.userName}}
-          {{getUser.fullName}}
-          <img class="avatar-lg avatar" :src="getUser.imgUrl" />
+          {{loggedInUser.userName}}
+          {{loggedInUser.fullName}}
+          <img class="avatar-lg avatar" :src="loggedInUser.imgUrl" />
         </div> -->
           <!-- {{postsToShow}} -->
       
@@ -19,6 +20,7 @@
 <script>
 import postList from '@/cmps/post-list.vue'
 import addPost from '@/cmps/add-post.vue'
+//import InfiniteLoading from 'vue-infinite-loading';
 
 export default{
   name: 'instagram-app',
@@ -34,19 +36,14 @@ export default{
       postsToShow(){
         return this.$store.getters.getPosts
       },
-      getUser(){
-            return this.$store.getters.getUser
-        }
+      // loggedInUser(){
+      //       return this.$store.getters.loggedInUser
+      //   }
   },
   methods: {
     loadPosts() {
       this.$store.dispatch({
         type: 'loadPosts'
-      })
-    },
-    loadUser() {
-      this.$store.dispatch({
-        type: 'loadUser'
       })
     },
     onAddPost(postToAdd){
@@ -61,11 +58,11 @@ export default{
   },
   created(){
     this.loadPosts();
-    this.loadUser();
   },
   components:{
    postList,
-   addPost
+   addPost,
+   //InfiniteLoading
   }
 }
 </script>

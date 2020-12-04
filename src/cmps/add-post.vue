@@ -7,7 +7,7 @@
     </button>
     <form class="add-post-modal" @submit.prevent="addPost">
       <h4 class="add-post-modal-title">New post</h4>
-      <textarea class="add-post-modal-textarea" v-model="postToAdd.content" placeholder="Write something..."></textarea>
+      <textarea class="add-post-modal-textarea" v-model="postToAdd.content" rows="1" placeholder="Write something..."></textarea>
       <div class="add-post-modal-loader" v-if="isUploading">
         <img src="@/assets/loader.svg" class="main-loader" />
       </div>
@@ -22,7 +22,9 @@
       </template>
       <img :src="postToAdd.imgUrl" class="add-post-modal-img" />
       <button class="add-post-modal-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" />
+        </svg>
       </button>
     </form>
   </div>
@@ -46,12 +48,10 @@ export default {
       // postToAdd: postService.getEmpty()
     };
   },
-  components: {},
   methods: {
     async onUploadImg(ev) {
       this.isUploading = true;
       const res = await uploadImg(ev);
-      console.log("img", res.url);
       this.postToAdd.imgUrl = res.url;
       this.isUploading = false;
     },
@@ -60,10 +60,27 @@ export default {
       this.$emit("addPost", this.postToAdd);
       this.postToAdd = { content: "", createdAt: null, imgUrl: "" };
       this.closeModal();
+      this.scrollTop();
     },
     closeModal() {
       this.$emit("closeAddPostModal");
     },
+    scrollTop() {
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+      // this.intervalId = setInterval(() => {
+      //   if (window.pageYOffset === 0) {
+      //     clearInterval(this.intervalId)
+      //   }
+      //   window.scroll(0, window.pageYOffset - 50)
+      // }, 20)
+    },
   },
+  // created(){
+
+  // }
 };
 </script>

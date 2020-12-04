@@ -1,25 +1,24 @@
 <template>
-  <section class="user-connection" >
-      <img src="@/assets/user-connection.png" />
+  <section class="user-connection">
+    <!-- <img src="@/assets/user-connection.png" />
       <div class="connection">
           <h1 class="main-header-inner-logo">Instayul</h1>
 
-          <!-- <img class="profile-img avatar" :src="user.imgUrl" /> -->
-          {{getUser}}
+        <img class="profile-img avatar" :src="user.imgUrl" /> 
+          {{loggedInUser}}
 
           <button class="continue-as-btn">continue</button>
-      </div>
+      </div> -->
   </section>
 </template>
 
 <script>
-import userService from '@/services/user-service.js';
+import userService from "@/services/user-service.js";
 export default {
-
-      computed:{
-      getUser(){
-            return this.$store.getters.getUser
-        }
-     },
-}
+  computed: {
+    // loggedInUser() {
+    //   return this.$store.getters.loggedInUser;
+    // },
+  },
+};
 </script>

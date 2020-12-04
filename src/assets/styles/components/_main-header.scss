@@ -4,6 +4,7 @@
     background-color: $clr3;
     position: sticky;
     top: 0;
+    z-index: 2;
     @include for-max-normal-layout{
         padding: 0 16px;
     }
@@ -35,6 +36,9 @@
         width: 215px;
         font-size: inherit;
         border-radius: 3px;
+        &::placeholder{
+            font-size: 13px;
+        }
         @include for-max-normal-layout{
             display: none;
         }

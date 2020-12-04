@@ -55,6 +55,11 @@ export const postStore = {
             const postIdx = state.posts.findIndex(post => post._id === updatedPost._id)
             console.log('index', postIdx)
             state.posts.splice(postIdx, 1, updatedPost)
+        },
+        removePost(state, postId){
+            console.log('mutations remove', postId)
+            const idx = state.posts.findIndex(post => post._id === postId)
+            state.posts.splice(idx, 1)
         }
     },
 
@@ -78,7 +83,6 @@ export const postStore = {
             await postService.update(state.posts[postIdx])
             //return comment;
         },
-
         async addLike({ state, commit }, {postId, user}){
             const postIdx = state.posts.findIndex(post => post._id === postId)
             commit({type: 'setLike', postIdx, user})  
@@ -86,23 +90,24 @@ export const postStore = {
         },
         async loadPostsOfUser({commit}, { user }) {
             const userPosts = await postService.getByUserId(user._id)
+            console.log('userPosts',userPosts)
             commit({type: 'setPostsOfUser', userPosts })
             return userPosts;    
         },
-
-        async updatePost({ commit }, { updatedPost }){
-            
+        async updatePost({ commit }, { updatedPost }){   
             updatedPost = await postService.update(updatedPost)
-            commit({ type: 'updatePost', updatedPost }) // replace the post (find the idx first) with the updatedPost
-           
+            commit({ type: 'updatePost', updatedPost }) // replace the post (find the idx first) with the updatedPost   
         },
-
         async addPost({ commit }, { postToAdd }){
-            //console.log('postToAdd store', postToAdd)
             postToAdd = await postService.add(postToAdd)
-            //console.log('post from db:', postToAdd);
             commit({ type: 'addPost', postToAdd })
             return postToAdd
         },
+        async removePost({ commit }, {postId}){
+            console.log('delete post!', postId)
+            await postService.remove(postId)
+            commit({ type: 'removePost', postId })
+            console.log('postToRemove', postId)
+        }
     },
 };

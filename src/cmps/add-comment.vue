@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="addComment" class="post-details-add-comment">
-    <textarea v-model="commentToAdd.content" ref="comment" @keyup.enter="addComment" placeholder="Add a comment…"></textarea>
+    <textarea v-model="commentToAdd.content" ref="comment" rows="1" @keyup.enter="addComment" placeholder="Add a comment…"></textarea>
     <button class="post-details-add-comment-btn">Post</button>
   </form>
 </template>

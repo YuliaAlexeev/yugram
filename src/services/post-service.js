@@ -5,7 +5,6 @@ export const postService = {
     getById,
     remove,
     update,
-    _makeId,
     getByUserId,
     add
 }
@@ -32,17 +31,10 @@ function update(post) {
 }
 
 function add(post) {
-    const miniUser = {_id: 'u101', userName: 'yulia.a', imgUrl: 'https://picsum.photos/id/305/200/300'}
+    const miniUser = {_id: '5fc5fd32768787be41a9a627', userName: 'yulia.a', imgUrl: 'https://picsum.photos/id/305/200/300'}
     post.by = miniUser    
 
     return HttpService.post('post', post)
 }
 
-function _makeId(length = 5) {
-    var txt = '';
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < length; i++) {
-        txt += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return txt;
-}
+

@@ -47,7 +47,7 @@ export const userStore = {
     //     context.commit({type:'setLogout', user})
     //   },
       async loadUser({commit} ,{userId}){
-        const user = await userService.getById('u101')
+        const user = await userService.getById('5fc5fd32768787be41a9a627')
         console.log('user store', user)
         commit({type: 'setUser', user})
       },

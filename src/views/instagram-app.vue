@@ -34,6 +34,7 @@ export default{
         return this.$store.getters.isLoading
       },
       postsToShow(){
+        console.log('posts to show', this.$store.getters.getPosts);
         return this.$store.getters.getPosts
       },
       // loggedInUser(){

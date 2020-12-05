@@ -56,7 +56,8 @@ export default {
       this.isUploading = false;
     },
     addPost() {
-      if (this.postToAdd.imgUrl === undefined) return;
+      if (!this.postToAdd.imgUrl) return;
+      console.log(this.postToAdd);
       this.$emit("addPost", this.postToAdd);
       this.postToAdd = { content: "", createdAt: null, imgUrl: "" };
       this.closeModal();

@@ -13,10 +13,10 @@ export const postStore = {
             return state.isLoading;
         },
         getPosts(state) {
-            return state.posts;
+            return state.posts.sort((post1, post2) => post2.createdAt - post1.createdAt);
         },
         getPostsOfUser(state){
-            return state.userPosts;
+            return state.userPosts.sort((post1, post2) => post2.createdAt - post1.createdAt);
         }
     },
     mutations: {
@@ -29,7 +29,7 @@ export const postStore = {
         addComment(state, { comment, postIdx, user }){
             const miniUser = {_id: user._id, userName: user.userName, imgUrl: user.imgUrl}
             comment.by = miniUser
-            state.posts[postIdx].comments.unshift(comment)
+            state.posts[postIdx].comments.push(comment)
         },
         setLike(state, {postIdx, user }){
             let loggedUser = user;
@@ -49,16 +49,15 @@ export const postStore = {
             state.posts[postIdx].comments.splice(commentId, 1)
         },
         addPost(state, {postToAdd}){
-            state.posts.unshift(postToAdd)
+            state.posts.push(postToAdd)
         },
         updatePost(state, {updatedPost}){
             const postIdx = state.posts.findIndex(post => post._id === updatedPost._id)
-            console.log('index', postIdx)
             state.posts.splice(postIdx, 1, updatedPost)
         },
-        removePost(state, postId){
-            console.log('mutations remove', postId)
+        removePost(state, {postId}){
             const idx = state.posts.findIndex(post => post._id === postId)
+            if(idx === -1) return;
             state.posts.splice(idx, 1)
         }
     },
@@ -73,10 +72,7 @@ export const postStore = {
             }, 500);
         },
         async addComment({ state, commit }, { comment, postId, user }){
-            console.log('add comment in store', comment, postId, user);
-            // console.log('postId', postId)
             // 1. find post idx. 2. add the comment to the post. 3. send the updated post to the json-server (put).
-      // console.log('payload', payload)
             const postIdx = state.posts.findIndex(post => post._id === postId)
             commit({type: 'addComment', postIdx, comment, user})
            
@@ -90,7 +86,6 @@ export const postStore = {
         },
         async loadPostsOfUser({commit}, { user }) {
             const userPosts = await postService.getByUserId(user._id)
-            console.log('userPosts',userPosts)
             commit({type: 'setPostsOfUser', userPosts })
             return userPosts;    
         },
@@ -99,15 +94,14 @@ export const postStore = {
             commit({ type: 'updatePost', updatedPost }) // replace the post (find the idx first) with the updatedPost   
         },
         async addPost({ commit }, { postToAdd }){
-            postToAdd = await postService.add(postToAdd)
+            console.log('postToAdd in store', postToAdd);
+            await postService.add(postToAdd)
             commit({ type: 'addPost', postToAdd })
             return postToAdd
         },
         async removePost({ commit }, {postId}){
-            console.log('delete post!', postId)
             await postService.remove(postId)
             commit({ type: 'removePost', postId })
-            console.log('postToRemove', postId)
         }
     },
 };

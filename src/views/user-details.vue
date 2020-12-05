@@ -126,6 +126,8 @@ export default {
         const user = await userService.getByUserName(userName);
         this.user = user[0];
         console.log('this user', this.user)
+        console.log('user[0]', user[0])
+        console.log('userName', userName)
         this.loadPostsOfUser();
         
 

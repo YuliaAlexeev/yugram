@@ -112,13 +112,11 @@ export default {
     getPostsOfUser() {
       let allPosts = this.$store.getters.getPosts
       let postsOfUser = allPosts.filter(post => post.by.userName === this.user.userName)
-      console.log({postsOfUser});
       return postsOfUser;
     }
   },
   methods: {
     loadPostsOfUser() {
-      // console.log('loadPostOfUser',this.user)
       this.$store.dispatch({
         type: 'loadPosts'
       })
@@ -138,7 +136,6 @@ export default {
     }
   },
   async created() {
-    setInterval(() => console.log(this.isShownFollowersModal, this.isShownFollowingModal), 1000)
     const userName = this.$route.params.userName;
     const user = await userService.getByUserName(userName);
     this.user = user[0];
@@ -151,11 +148,6 @@ export default {
       this.loadPostsOfUser();
       this.selectedPostIdx = null;
     },
-
-
-    //this.isShownFollowersModal = null;
-
-
   },
   components: {
     usersModal,

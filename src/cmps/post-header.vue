@@ -23,7 +23,6 @@ export default {
   },
   methods: {
     showMoreOptions() {
-      console.log("clicked", this.isShownRemovePost);
       this.isShownRemovePost = !this.isShownRemovePost;
     },
     closePostOptionsModal() {

@@ -30,7 +30,7 @@
 <script>
 export default {
   name: "post-actions",
-  props:['post','user'],
+  props: ['post', 'user'],
   computed: {
     getLike() {
       const res = this.post.likes.findIndex(
@@ -43,12 +43,7 @@ export default {
     addCommentBtnClicked() {
       document.querySelector('.comment-input').focus();
     },
-    // addLike() {
-
-    //   console.log()
-    //   this.$emit("addLike");
-    // },
-       addLike() {
+    addLike() {
       this.$store.dispatch({
         type: "addLike",
         postId: this.post._id,

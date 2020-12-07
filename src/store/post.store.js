@@ -66,7 +66,6 @@ export const postStore = {
             const postIdx = state.posts.findIndex(
                 (post) => post._id === updatedPost._id
             );
-            console.log('idx of post updatePost mutation', postIdx);
             state.posts.splice(postIdx, 1, updatedPost);
         },
         removePost(state, { postId }) {
@@ -116,18 +115,15 @@ export const postStore = {
         },
         async updatePost({ commit }, { updatedPost }) {
             updatedPost = await postService.update(updatedPost);
-            console.log('updated post returned from db', updatedPost);
             commit({ type: 'updatePost', updatedPost }); // replace the post (find the idx first) with the updatedPost
         },
         async addPost({ commit }, { postToAdd }) {
             postToAdd.createdAt = Date.now();
-            console.log('postToAdd in store', postToAdd);
             await postService.add(postToAdd);
             commit({ type: 'addPost', postToAdd });
             return postToAdd;
         },
         async removePost({ commit }, { postId }) {
-            console.log('removeing post', postId);
             await postService.remove(postId);
             commit({ type: 'removePost', postId });
         },

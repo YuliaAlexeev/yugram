@@ -23,7 +23,6 @@ export default {
     }
   },
   created() {
-    
     this.loadUser();
     console.log('loggedInUser', this.loggedInUser)
   },

@@ -27,7 +27,6 @@ function remove(postId) {
 }
 
 function update(post) {
-    console.log('service post', post)
     return HttpService.put(`post/${post._id}`, post)
 }
 

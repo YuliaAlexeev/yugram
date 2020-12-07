@@ -45,24 +45,6 @@ export default {
     closePostModal() {
       this.$emit('closePostModal');
     },
-    // addLike() {
-    //   this.$store.dispatch({
-    //     type: "addLike",
-    //     postId: this.post._id,
-    //     user: this.user,
-    //   });
-    // },
-    // removeComment(post, commentId) {
-    //   console.log('post', post);
-    //   const commentIdx = this.post.comments.findIndex(comment => comment.id === commentId)
-    //   console.log('commentIdx in find', commentIdx)
-    //   const postCopy = JSON.parse(JSON.stringify(post))
-    //   postCopy.comments.splice(commentIdx, 1)
-    //   this.$store.dispatch({
-    //       type: 'updatePost',
-    //       updatedPost: postCopy
-    //  })
-    // },
   },
   computed: {
     loggedInUser() {

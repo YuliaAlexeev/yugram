@@ -10,11 +10,6 @@ import mainHeader from "@/cmps/main-header.vue";
 
 export default {
   name: "App",
-  computed: {
-    loggedInUser() {
-      return this.$store.getters.loggedInUser;
-    },
-  },
   methods: {
     loadUser() {
       this.$store.dispatch({
@@ -24,7 +19,6 @@ export default {
   },
   created() {
     this.loadUser();
-    console.log('loggedInUser', this.loggedInUser)
   },
   components: {
     mainHeader

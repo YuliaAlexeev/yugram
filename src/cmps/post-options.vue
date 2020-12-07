@@ -28,11 +28,11 @@ export default {
       this.$emit("closeModal");
     },
     removePost(postId) {
-      console.log('removing post from post options cmp', postId)
       this.$store.dispatch({
         type: "removePost",
         postId,
       });
+      this.$emit("removedPost")
     },
   },
 };

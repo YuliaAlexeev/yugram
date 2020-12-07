@@ -8,7 +8,7 @@
     <div class="post-modal">
       <img class="post-modal-img" :src=userPost.imgUrl alt="post img" />
       <div class="post-modal-right">
-        <post-header :post="userPost" :user="loggedInUser" ></post-header>
+        <post-header :post="userPost" :user="loggedInUser" @removedPost="removedPost"></post-header>
         <post-author class="post-modal-author" :post="userPost"></post-author>
       <post-comments class="post-modal-comments" :comments="userPost.comments" :post="userPost" :user="loggedInUser"></post-comments>
         <div class="post-modal-bottom">
@@ -45,6 +45,9 @@ export default {
     closePostModal() {
       this.$emit('closePostModal');
     },
+    removedPost() {
+      this.$emit("closePostModal");
+    }
   },
   computed: {
     loggedInUser() {

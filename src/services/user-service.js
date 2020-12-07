@@ -32,7 +32,6 @@ function update(user) {
 }
 
 async function login(userCred) {
-    console.log('userCred', userCred)
     const user = await HttpService.post('auth/login', userCred)
     return _handleLogin(user)
 }

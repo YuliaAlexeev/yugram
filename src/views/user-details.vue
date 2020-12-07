@@ -72,9 +72,9 @@
         </div>
         No posts yet
       </div>
-      <div class="profile-posts-item" @click="selectedPostIdx = idx" v-for="(userPost, idx) in getPostsOfUser" :key="userPost.id">
-        <img class="profile-posts-item-img" :src="userPost.imgUrl" />
 
+      <div  class="profile-posts-item" @click="selectedPostIdx = idx" v-for="(userPost, idx) in getPostsOfUser" :key="userPost.id">
+        <img class="profile-posts-item-img" :src="userPost.imgUrl" />
         <div class="profile-posts-item-count">
           <span class="">
             <svg height="19" viewBox="0 0 48 48" width="19">
@@ -105,7 +105,8 @@ export default {
       user: null,
       isShownFollowersModal: false,
       isShownFollowingModal: false,
-      selectedPostIdx: null
+      selectedPostIdx: null,
+      createdTimestamp: Date.now()
     }
   },
   computed: {
@@ -118,7 +119,7 @@ export default {
   methods: {
     loadPostsOfUser() {
       this.$store.dispatch({
-        type: 'loadPosts'
+        type: 'loadPosts',
       })
     },
     toggleFollowersModal() {
@@ -145,7 +146,6 @@ export default {
     async '$route.params.userName'(newUserName) {
       const user = await userService.getByUserName(newUserName);
       this.user = user[0];
-      this.loadPostsOfUser();
       this.selectedPostIdx = null;
     },
   },

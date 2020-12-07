@@ -2,7 +2,7 @@ import userService from "../services/user-service";
 
 export const userStore = {
     state: {
-      strict: true,
+      //strict: true,
       user: null,
     },
     getters: {
@@ -16,12 +16,10 @@ export const userStore = {
         state.user = user;
       },
       setLogout(state){
-        console.log('state.user', state.users)
         state.users = null;
       },
       setOnFollow(state, {followedUser, loggedInUser }){
         //let followedUserId = followedUser._id;
-        console.log('followedUser mutatuion', followedUser._id)
 
         // const miniUser = {_id: loggedInUser._id, userName: loggedInUser.userName, imgUrl: loggedInUser.imgUrl}
         // const userIsExist = state.users[followedUserId].followers.findIndex(followedUserId => followedUserId === loggedInUser._id)

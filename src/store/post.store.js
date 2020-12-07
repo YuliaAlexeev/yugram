@@ -2,10 +2,9 @@ import { postService } from '@/services/post-service.js';
 
 export const postStore = {
     state: {
-        strict: true,
+        //strict: true,
         isLoading: false,
         posts: [],
-
     },
     getters: {
         isLoading(state) {
@@ -119,7 +118,7 @@ export const postStore = {
         },
         async addPost({ commit }, { postToAdd }) {
             postToAdd.createdAt = Date.now();
-            await postService.add(postToAdd);
+            postToAdd = await postService.add(postToAdd);
             commit({ type: 'addPost', postToAdd });
             return postToAdd;
         },

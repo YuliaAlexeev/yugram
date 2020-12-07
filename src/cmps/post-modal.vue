@@ -10,7 +10,7 @@
       <div class="post-modal-right">
         <post-header :post="userPost" :user="loggedInUser" ></post-header>
         <post-author class="post-modal-author" :post="userPost"></post-author>
-        <post-comments class="post-modal-comments" :comments="userPost.comments" :user="loggedInUser"></post-comments>
+      <post-comments class="post-modal-comments" :comments="userPost.comments" :post="userPost" :user="loggedInUser"></post-comments>
         <div class="post-modal-bottom">
             <post-actions :post="userPost" :user="loggedInUser"></post-actions>
             <post-likes :post="userPost"></post-likes>
@@ -33,8 +33,6 @@ import postActions from '@/cmps/post-actions';
 import postTime from '@/cmps/post-time';
 import postAuthor from '@/cmps/post-author';
 
-//import postDetails from '@/cmps/post-details';
-
 export default {
   name: 'post-modal',
   props: ['userPost'],
@@ -47,13 +45,13 @@ export default {
     closePostModal() {
       this.$emit('closePostModal');
     },
-    addLike() {
-      this.$store.dispatch({
-        type: "addLike",
-        postId: this.post._id,
-        user: this.user,
-      });
-    },
+    // addLike() {
+    //   this.$store.dispatch({
+    //     type: "addLike",
+    //     postId: this.post._id,
+    //     user: this.user,
+    //   });
+    // },
     // removeComment(post, commentId) {
     //   console.log('post', post);
     //   const commentIdx = this.post.comments.findIndex(comment => comment.id === commentId)

@@ -3,13 +3,13 @@
     <post-header :post="post" :user="user"></post-header>
     <img class="post-details-img" :src="post.imgUrl" alt="post img" />
     <div class="post-details-content">
-      <post-actions :post="post" :user="user" @addLike="addLike"></post-actions>
+      <post-actions :post="post" :user="user" ></post-actions>
       <post-likes :post="post"></post-likes>
       <post-author :post="post"></post-author>
       <button class="show-comments-btn" v-if="slicedCommentsLength > 0" @click="isShowAllComments = !isShowAllComments">
         View {{ showMoreLess }} {{ slicedCommentsLength }} comments
       </button>
-      <post-comments :comments="commentsToShow" @removeComment="removeComment" :post="post" :user="user"></post-comments>
+      <post-comments :comments="commentsToShow" :post="post" :user="user"></post-comments>
       <post-time :post="post"></post-time>
     </div>
     <add-comment :post="post" :user="user"></add-comment>
@@ -72,24 +72,24 @@ export default {
       });
       this.commentToAdd = { content: "" };
     },
-    addLike() {
-      this.$store.dispatch({
-        type: "addLike",
-        postId: this.post._id,
-        user: this.user,
-      });
-    },
-    removeComment(post, commentId) {
-      console.log('post', post);
-      const commentIdx = this.post.comments.findIndex(comment => comment.id === commentId)
-      console.log('commentIdx in find', commentIdx)
-      const postCopy = JSON.parse(JSON.stringify(post))
-      postCopy.comments.splice(commentIdx, 1)
-      this.$store.dispatch({
-          type: 'updatePost',
-          updatedPost: postCopy
-     })
-    },
+    // addLike() {
+    //   this.$store.dispatch({
+    //     type: "addLike",
+    //     postId: this.post._id,
+    //     user: this.user,
+    //   });
+    // },
+    // removeComment(post, commentId) {
+    //   console.log('post', post);
+    //   const commentIdx = this.post.comments.findIndex(comment => comment.id === commentId)
+    //   console.log('commentIdx in find', commentIdx)
+    //   const postCopy = JSON.parse(JSON.stringify(post))
+    //   postCopy.comments.splice(commentIdx, 1)
+    //   this.$store.dispatch({
+    //       type: 'updatePost',
+    //       updatedPost: postCopy
+    //  })
+    // },
   },
   async created() {
     const user = await userService.getById("5fc5fd32768787be41a9a627");

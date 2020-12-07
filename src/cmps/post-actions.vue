@@ -43,8 +43,17 @@ export default {
     addCommentBtnClicked() {
       document.querySelector('.comment-input').focus();
     },
-    addLike() {
-      this.$emit("addLike");
+    // addLike() {
+
+    //   console.log()
+    //   this.$emit("addLike");
+    // },
+       addLike() {
+      this.$store.dispatch({
+        type: "addLike",
+        postId: this.post._id,
+        user: this.user,
+      });
     },
   },
 };

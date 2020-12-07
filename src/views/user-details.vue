@@ -15,10 +15,10 @@
           <button class="profile-count" @click="toggleFollowersModal">
             <span class="profile-count-num">{{user.followers.length}}</span> followers
           </button>
-       
+
           <users-modal @closeModal="toggleFollowersModal" v-show="isShownFollowersModal">
             <h4 slot="title" class="screen-box-top-title">Followers</h4>
-            <div slot="users" v-for="user in user.followers" :key="user._id" class="screen-row">
+            <div slot="users" @click="toggleFollowersModal" v-for="user in user.followers" :key="user._id" class="screen-row">
               <router-link :to="`/${user.userName}`"><img class="user-avatar avatar-lg avatar" :src="user.imgUrl" alt="profile pic" /></router-link>
               <div class="screen-row-name">
                 <div class="screen-row-name-username" :title="user.userName">
@@ -27,24 +27,24 @@
                 <div v-if="user.fullName" class="screen-row-name-fullname">{{user.fullName}}</div>
               </div>
             </div>
-          </users-modal> 
+          </users-modal>
 
           <button class="profile-count" @click="toggleFollowingModal">
             <span class="profile-count-num">{{user.following.length}}</span> following
           </button>
-          
-           <users-modal @closeModal="toggleFollowingModal" v-show="isShownFollowingModal">
+
+          <users-modal @closeModal="toggleFollowingModal" v-show="isShownFollowingModal">
             <h4 slot="title" class="screen-box-top-title">Following</h4>
-            <div slot="users" v-for="user in user.following" :key="user._id" class="screen-row">
+            <div slot="users" @click="toggleFollowingModal" v-for="user in user.following" :key="user._id" class="screen-row">
               <router-link :to="`/${user.userName}`"><img class="user-avatar avatar-lg avatar" :src="user.imgUrl" alt="profile pic" /></router-link>
               <div class="screen-row-name">
                 <div class="screen-row-name-username" :title="user.userName">
-                   <router-link :to="`/${user.userName}`">{{user.userName}}</router-link>
+                  <router-link :to="`/${user.userName}`">{{user.userName}}</router-link>
                 </div>
                 <div v-if="user.fullName" class="screen-row-name-fullname">{{user.fullName}}</div>
               </div>
             </div>
-          </users-modal> 
+          </users-modal>
         </div>
 
         <div class="profile-description-bio">
@@ -64,12 +64,17 @@
     <section class="profile-posts">
       <div class="profile-posts-no-posts" v-if="getPostsOfUser.length === 0">
         <div class="profile-posts-no-posts-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420.8 420.8"><path d="M406.8 96.4c-8.4-8.8-20-14-33.2-14h-66.4v-.8c0-10-4-19.6-10.8-26-6.8-6.8-16-10.8-26-10.8h-120c-10.4 0-19.6 4-26.4 10.8-6.8 6.8-10.8 16-10.8 26v.8h-66c-13.2 0-24.8 5.2-33.2 14-8.4 8.4-14 20.4-14 33.2v199.2C0 342 5.2 353.6 14 362c8.4 8.4 20.4 14 33.2 14h326.4c13.2 0 24.8-5.2 33.2-14 8.4-8.4 14-20.4 14-33.2V129.6c0-13.2-5.2-24.8-14-33.2zM400 328.8h-.4c0 7.2-2.8 13.6-7.6 18.4s-11.2 7.6-18.4 7.6H47.2c-7.2 0-13.6-2.8-18.4-7.6-4.8-4.8-7.6-11.2-7.6-18.4V129.6c0-7.2 2.8-13.6 7.6-18.4s11.2-7.6 18.4-7.6h77.2c6 0 10.8-4.8 10.8-10.8V81.2c0-4.4 1.6-8.4 4.4-11.2s6.8-4.4 11.2-4.4h119.6c4.4 0 8.4 1.6 11.2 4.4 2.8 2.8 4.4 6.8 4.4 11.2v11.6c0 6 4.8 10.8 10.8 10.8H374c7.2 0 13.6 2.8 18.4 7.6s7.6 11.2 7.6 18.4v199.2z"/><path d="M210.4 130.8c-27.2 0-52 11.2-69.6 28.8-18 18-28.8 42.4-28.8 69.6s11.2 52 28.8 69.6c18 18 42.4 28.8 69.6 28.8s52-11.2 69.6-28.8c18-18 28.8-42.4 28.8-69.6s-11.2-52-28.8-69.6c-17.6-17.6-42.4-28.8-69.6-28.8zM264.8 284c-14 13.6-33.2 22.4-54.4 22.4S170 297.6 156 284c-14-14-22.4-33.2-22.4-54.4 0-21.2 8.8-40.4 22.4-54.4 14-14 33.2-22.4 54.4-22.4s40.4 8.8 54.4 22.4c14 14 22.4 33.2 22.4 54.4.4 21.2-8.4 40.4-22.4 54.4z"/><circle cx="352.8" cy="150" r="19.6"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420.8 420.8">
+            <path d="M406.8 96.4c-8.4-8.8-20-14-33.2-14h-66.4v-.8c0-10-4-19.6-10.8-26-6.8-6.8-16-10.8-26-10.8h-120c-10.4 0-19.6 4-26.4 10.8-6.8 6.8-10.8 16-10.8 26v.8h-66c-13.2 0-24.8 5.2-33.2 14-8.4 8.4-14 20.4-14 33.2v199.2C0 342 5.2 353.6 14 362c8.4 8.4 20.4 14 33.2 14h326.4c13.2 0 24.8-5.2 33.2-14 8.4-8.4 14-20.4 14-33.2V129.6c0-13.2-5.2-24.8-14-33.2zM400 328.8h-.4c0 7.2-2.8 13.6-7.6 18.4s-11.2 7.6-18.4 7.6H47.2c-7.2 0-13.6-2.8-18.4-7.6-4.8-4.8-7.6-11.2-7.6-18.4V129.6c0-7.2 2.8-13.6 7.6-18.4s11.2-7.6 18.4-7.6h77.2c6 0 10.8-4.8 10.8-10.8V81.2c0-4.4 1.6-8.4 4.4-11.2s6.8-4.4 11.2-4.4h119.6c4.4 0 8.4 1.6 11.2 4.4 2.8 2.8 4.4 6.8 4.4 11.2v11.6c0 6 4.8 10.8 10.8 10.8H374c7.2 0 13.6 2.8 18.4 7.6s7.6 11.2 7.6 18.4v199.2z" />
+            <path d="M210.4 130.8c-27.2 0-52 11.2-69.6 28.8-18 18-28.8 42.4-28.8 69.6s11.2 52 28.8 69.6c18 18 42.4 28.8 69.6 28.8s52-11.2 69.6-28.8c18-18 28.8-42.4 28.8-69.6s-11.2-52-28.8-69.6c-17.6-17.6-42.4-28.8-69.6-28.8zM264.8 284c-14 13.6-33.2 22.4-54.4 22.4S170 297.6 156 284c-14-14-22.4-33.2-22.4-54.4 0-21.2 8.8-40.4 22.4-54.4 14-14 33.2-22.4 54.4-22.4s40.4 8.8 54.4 22.4c14 14 22.4 33.2 22.4 54.4.4 21.2-8.4 40.4-22.4 54.4z" />
+            <circle cx="352.8" cy="150" r="19.6" />
+          </svg>
         </div>
-        No posts yet</div>
-      <div class="profile-posts-item" @click="selectedPost = userPost" v-for="userPost in getPostsOfUser" :key="userPost.id">
+        No posts yet
+      </div>
+      <div class="profile-posts-item" @click="selectedPostIdx = idx" v-for="(userPost, idx) in getPostsOfUser" :key="userPost.id">
         <img class="profile-posts-item-img" :src="userPost.imgUrl" />
-       
+
         <div class="profile-posts-item-count">
           <span class="">
             <svg height="19" viewBox="0 0 48 48" width="19">
@@ -85,7 +90,7 @@
           </span>
         </div>
       </div>
-      <post-modal v-if="selectedPost" @closePostModal="selectedPost = null" :userPost="selectedPost"></post-modal>
+      <post-modal v-if="selectedPostIdx !== null" @closePostModal="selectedPostIdx = null" :userPost="getPostsOfUser[selectedPostIdx]"></post-modal>
     </section>
   </main>
 </template>
@@ -95,63 +100,66 @@ import userService from '@/services/user-service.js';
 import usersModal from '@/cmps/users-modal';
 import postModal from '@/cmps/post-modal';
 export default {
-    data() {
-        return {
-            user: null,
-            isShownFollowersModal: false,
-            isShownFollowingModal: false,
-            selectedPost: null
-        }
+  data() {
+    return {
+      user: null,
+      isShownFollowersModal: false,
+      isShownFollowingModal: false,
+      selectedPostIdx: null
+    }
+  },
+  computed: {
+    getPostsOfUser() {
+      let allPosts = this.$store.getters.getPosts
+      let postsOfUser = allPosts.filter(post => post.by.userName === this.user.userName)
+      console.log({postsOfUser});
+      return postsOfUser;
+    }
+  },
+  methods: {
+    loadPostsOfUser() {
+      // console.log('loadPostOfUser',this.user)
+      this.$store.dispatch({
+        type: 'loadPosts'
+      })
     },
-    computed:{
-        getPostsOfUser(){
-            return this.$store.getters.getPostsOfUser
-        }
+    toggleFollowersModal() {
+      this.isShownFollowersModal = !this.isShownFollowersModal;
     },
-    methods:{
-        loadPostsOfUser(){
-          // console.log('loadPostOfUser',this.user)
-            this.$store.dispatch({
-                type: 'loadPostsOfUser',
-                user: this.user
-            })
-        },
-        toggleFollowersModal(){
-           this.isShownFollowersModal= !this.isShownFollowersModal;
-        },
-        toggleFollowingModal(){
-            this.isShownFollowingModal= !this.isShownFollowingModal;
-        },
-        onFollow(){
-          // this.$store.dispatch({
+    toggleFollowingModal() {
+      this.isShownFollowingModal = !this.isShownFollowingModal;
+    },
+    onFollow() {
+      // this.$store.dispatch({
       //   type: "onFollow",
       //   followedUser: this.user,
       //   loggedInUser: this.loggedInUser
       // });
-        }
-    },
-    async created() {
-        const userName = this.$route.params.userName;
-        const user = await userService.getByUserName(userName);
-        this.user = user[0];
-        this.loadPostsOfUser();
-    },
-    watch: {
-        async '$route.params.userName'(newUserName) {
-            const user = await userService.getByUserName(newUserName);
-            this.user = user[0];
-            this.loadPostsOfUser();
-            this.selectedPost = null;
-        },
-       
-       
-            //this.isShownFollowersModal = null;
-        
-    
-    },
-    components:{
-        usersModal,
-        postModal
     }
+  },
+  async created() {
+    setInterval(() => console.log(this.isShownFollowersModal, this.isShownFollowingModal), 1000)
+    const userName = this.$route.params.userName;
+    const user = await userService.getByUserName(userName);
+    this.user = user[0];
+    this.loadPostsOfUser();
+  },
+  watch: {
+    async '$route.params.userName'(newUserName) {
+      const user = await userService.getByUserName(newUserName);
+      this.user = user[0];
+      this.loadPostsOfUser();
+      this.selectedPostIdx = null;
+    },
+
+
+    //this.isShownFollowersModal = null;
+
+
+  },
+  components: {
+    usersModal,
+    postModal
+  }
 }
 </script>

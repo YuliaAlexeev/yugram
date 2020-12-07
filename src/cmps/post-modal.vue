@@ -10,41 +10,61 @@
       <div class="post-modal-right">
         <post-header :post="userPost" :user="loggedInUser" ></post-header>
         <post-author class="post-modal-author" :post="userPost"></post-author>
-        <post-comments class="post-modal-comments" :comments="userPost.comments" :user="userPost.by"></post-comments>
+        <post-comments class="post-modal-comments" :comments="userPost.comments" :user="loggedInUser"></post-comments>
         <div class="post-modal-bottom">
             <post-actions :post="userPost" :user="loggedInUser"></post-actions>
             <post-likes :post="userPost"></post-likes>
             <post-time :post="userPost"></post-time>
         </div>
-        <add-comment :post="userPost" :user="loggedInUser"></add-comment>
+        <add-comment :post="userPost" :isUserDetails="true" :user="loggedInUser"></add-comment>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import moment from "moment";
-import userService from "@/services/user-service";
-import postHeader from "@/cmps/post-header";
-import postComments from "@/cmps/post-comments";
-import postLikes from "@/cmps/post-likes";
-import addComment from "@/cmps/add-comment";
-import postActions from "@/cmps/post-actions";
-import postTime from "@/cmps/post-time";
-import postAuthor from "@/cmps/post-author";
+import moment from 'moment';
+import userService from '@/services/user-service';
+import postHeader from '@/cmps/post-header';
+import postComments from '@/cmps/post-comments';
+import postLikes from '@/cmps/post-likes';
+import addComment from '@/cmps/add-comment';
+import postActions from '@/cmps/post-actions';
+import postTime from '@/cmps/post-time';
+import postAuthor from '@/cmps/post-author';
+
+//import postDetails from '@/cmps/post-details';
 
 export default {
-  name: "post-modal",
-  props: ["userPost"],
+  name: 'post-modal',
+  props: ['userPost'],
   data() {
     return {
-      // user: null,
+      commentToAdd: { content: "", createdAt: Date.now() },
     };
   },
   methods: {
     closePostModal() {
-      this.$emit("closePostModal");
+      this.$emit('closePostModal');
     },
+    addLike() {
+      this.$store.dispatch({
+        type: "addLike",
+        postId: this.post._id,
+        user: this.user,
+      });
+    },
+    // removeComment(post, commentId) {
+    //   console.log('post', post);
+    //   const commentIdx = this.post.comments.findIndex(comment => comment.id === commentId)
+    //   console.log('commentIdx in find', commentIdx)
+    //   const postCopy = JSON.parse(JSON.stringify(post))
+    //   postCopy.comments.splice(commentIdx, 1)
+    //   this.$store.dispatch({
+    //       type: 'updatePost',
+    //       updatedPost: postCopy
+    //  })
+    // },
   },
   computed: {
     loggedInUser() {

@@ -28,6 +28,9 @@
         &-logo{
             font-family: 'Cookie', cursive;
         }
+        &-nav{
+            line-height: 1;
+        }
     }
     &-search{
         border: 1px solid $clr2;

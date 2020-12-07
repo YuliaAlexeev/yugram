@@ -20,7 +20,7 @@
         </label>
         <input type="file" id="imgUploader" name="img-uploader" @change="onUploadImg" />
       </template>
-      <img :src="postToAdd.imgUrl" class="add-post-modal-img" />
+      <img :src="postToAdd.imgUrl" v-if="postToAdd.imgUrl" class="add-post-modal-img" />
       <button class="add-post-modal-btn">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
           <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" />
@@ -32,20 +32,15 @@
 
 <script>
 import { uploadImg } from "@/services/img-upload-service.js";
+import { postService } from '@/services/post-service.js';
+
 export default {
   name: "add-post",
   data() {
     return {
       isUploading: false,
       imgUrl: null,
-      postToAdd: {
-        content: "",
-        createdAt: Date.now(),
-        imgUrl: this.imgUrl,
-        comments: [],
-        likes: [],
-      },
-      // postToAdd: postService.getEmpty()
+      postToAdd: postService.getEmpty()
     };
   },
   methods: {
@@ -57,9 +52,8 @@ export default {
     },
     addPost() {
       if (!this.postToAdd.imgUrl) return;
-      console.log(this.postToAdd);
       this.$emit("addPost", this.postToAdd);
-      this.postToAdd = { content: "", createdAt: null, imgUrl: "" };
+      this.postToAdd = postService.getEmpty()
       this.closeModal();
       this.scrollTop();
     },
@@ -72,16 +66,7 @@ export default {
         left: 0,
         behavior: "smooth",
       });
-      // this.intervalId = setInterval(() => {
-      //   if (window.pageYOffset === 0) {
-      //     clearInterval(this.intervalId)
-      //   }
-      //   window.scroll(0, window.pageYOffset - 50)
-      // }, 20)
     },
   },
-  // created(){
-
-  // }
 };
 </script>

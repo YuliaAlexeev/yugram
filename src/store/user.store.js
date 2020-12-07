@@ -4,7 +4,6 @@ export const userStore = {
     state: {
       strict: true,
       user: null,
-
     },
     getters: {
       loggedInUser(state) {
@@ -48,7 +47,6 @@ export const userStore = {
     //   },
       async loadUser({commit} ,{userId}){
         const user = await userService.getById('5fc5fd32768787be41a9a627')
-        console.log('user store', user)
         commit({type: 'setUser', user})
       },
       // async onFollow({commit} , {followedUser, loggedInUser}){

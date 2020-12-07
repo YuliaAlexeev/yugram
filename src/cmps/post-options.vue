@@ -11,16 +11,15 @@
 
 <script>
 export default {
-    name: 'remove-post',
-    props: ["post", "user"],
-  data(){
-    return{
-      isCloseModal: false
-    }
+  name: "remove-post",
+  props: ["post", "user"],
+  data() {
+    return {
+      isCloseModal: false,
+    };
   },
-  computed:{
+  computed: {
     isByLoggedUser() {
-      //console.log('post id', this.post._id, 'user id', this.user._id)
       return (postId) => postId === this.user._id;
     },
   },
@@ -28,18 +27,13 @@ export default {
     closeModal() {
       this.$emit("closeModal");
     },
-    removePost(postId){
-      //this.$emit("removePost");
-      console.log('remove postId', postId)
+    removePost(postId) {
+      console.log('removing post from post options cmp', postId)
       this.$store.dispatch({
-        type: 'removePost',
-        postId
-      })
-    }
-  },
-
-  created() {
-   //console.log("options component", this.user);
+        type: "removePost",
+        postId,
+      });
+    },
   },
 };
 </script>

@@ -10,15 +10,19 @@ export default {
     remove,
     update
 }
+
 function getUsers() {
     return HttpService.get('user')
 }
+
 function getById(userId) {
     return HttpService.get(`user/${userId}`)
 }
+
 function getByUserName(userName) {
     return HttpService.get(`user?userName=${userName}`)
 }
+
 function remove(userId) {
     return HttpService.delete(`user/${userId}`)
 }

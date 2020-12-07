@@ -55,6 +55,7 @@
             min-height: 56px;
             textarea{
                 height: 21px;
+                overflow: hidden;
             }
             @include for-narrow-layout{
                 border-top: 1px solid lighten($clr2, 5%);

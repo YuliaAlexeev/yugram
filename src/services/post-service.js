@@ -6,7 +6,8 @@ export const postService = {
     remove,
     update,
     getByUserId,
-    add
+    add,
+    getEmpty
 }
 
 function getPosts() {
@@ -33,8 +34,14 @@ function update(post) {
 function add(post) {
     const miniUser = {_id: '5fc5fd32768787be41a9a627', userName: 'yulia.a', imgUrl: 'https://picsum.photos/id/305/200/300'}
     post.by = miniUser    
-
     return HttpService.post('post', post)
 }
 
-
+function getEmpty() {
+    return {
+        content: '',
+        imgUrl: this.imgUrl,
+        comments: [],
+        likes: [],
+    }
+}

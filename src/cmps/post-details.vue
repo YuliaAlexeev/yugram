@@ -3,13 +3,13 @@
     <post-header :post="post" :user="user"></post-header>
     <img class="post-details-img" :src="post.imgUrl" alt="post img" />
     <div class="post-details-content">
-      <post-actions :post="post" :user="user"></post-actions>
+      <post-actions :post="post" :user="user" @addLike="addLike"></post-actions>
       <post-likes :post="post"></post-likes>
       <post-author :post="post"></post-author>
       <button class="show-comments-btn" v-if="slicedCommentsLength > 0" @click="isShowAllComments = !isShowAllComments">
         View {{ showMoreLess }} {{ slicedCommentsLength }} comments
       </button>
-      <post-comments :comments="commentsToShow" :post="post" :user="user"></post-comments>
+      <post-comments :comments="commentsToShow" @removeComment="removeComment" :post="post" :user="user"></post-comments>
       <post-time :post="post"></post-time>
     </div>
     <add-comment :post="post" :user="user"></add-comment>
@@ -42,13 +42,10 @@ export default {
       return moment(this.post.comments.createdAt).fromNow();
     },
     commentsToShow() {
-    const commentsToShow = [...this.post.comments];
-    commentsToShow.reverse()
-
       if (this.post.comments.length > 2 && !this.isShowAllComments) {
-        return commentsToShow.slice(commentsToShow.length -2 ,commentsToShow.length);
+        return this.post.comments.slice(this.post.comments.length -2 ,this.post.comments.length);
       } else {
-        return commentsToShow;
+        return this.post.comments;
       }
     },
     slicedCommentsLength() {
@@ -57,20 +54,11 @@ export default {
     showMoreLess() {
       return !this.isShowAllComments ? "all" : "less";
     },
-    // getLike() {
-    //   const res = this.post.likes.findIndex(
-    //     (userLike) => userLike._id === this.user._id
-    //   );
-    //   return res !== -1;
-    // },
     isByLoggedUser() {
       return (commentById) => commentById === this.user._id;
     },
   },
   methods: {
-    // showLikesModal() {
-    //   this.isShownModal = !this.isShownModal;
-    // },
     closeModal() {
       this.isShownModal = null;
     },
@@ -84,9 +72,6 @@ export default {
       });
       this.commentToAdd = { content: "" };
     },
-    addCommentBtn() {
-      this.$refs.comment.focus();
-    },
     addLike() {
       this.$store.dispatch({
         type: "addLike",
@@ -95,19 +80,15 @@ export default {
       });
     },
     removeComment(post, commentId) {
-      console.log("details remove commentId", commentId);
-      console.log("details from post", post);
-      const commentIdx = post.comments.findIndex(
-        (comment) => comment.id === commentId
-      );
-      console.log("commentIdx in find", commentIdx);
-      const postCopy = JSON.parse(JSON.stringify(post));
-      postCopy.comments.splice(commentIdx, 1);
-
+      console.log('post', post);
+      const commentIdx = this.post.comments.findIndex(comment => comment.id === commentId)
+      console.log('commentIdx in find', commentIdx)
+      const postCopy = JSON.parse(JSON.stringify(post))
+      postCopy.comments.splice(commentIdx, 1)
       this.$store.dispatch({
-        type: "updatePost",
-        updatedPost: postCopy,
-      });
+          type: 'updatePost',
+          updatedPost: postCopy
+     })
     },
   },
   async created() {

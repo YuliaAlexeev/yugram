@@ -23,7 +23,7 @@ import addPost from '@/cmps/add-post.vue'
 //import InfiniteLoading from 'vue-infinite-loading';
 
 export default{
-  name: 'instagram-app',
+  name: 'instayul-app',
   data(){
     return {
       isShowAddPostModal: false,
@@ -34,12 +34,8 @@ export default{
         return this.$store.getters.isLoading
       },
       postsToShow(){
-        console.log('posts to show', this.$store.getters.getPosts);
         return this.$store.getters.getPosts
       },
-      // loggedInUser(){
-      //       return this.$store.getters.loggedInUser
-      //   }
   },
   methods: {
     loadPosts() {

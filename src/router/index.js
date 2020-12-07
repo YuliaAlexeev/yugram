@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/instagram-app.vue'
+import Home from '../views/instayul-app.vue'
 import postsPage from '../views/posts-page.vue'
 import userDetails from '../views/user-details.vue';
 import userConnection from '../views/user-connection.vue'

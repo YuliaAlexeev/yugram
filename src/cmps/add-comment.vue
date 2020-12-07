@@ -1,17 +1,19 @@
 <template>
   <form @submit.prevent="addComment" class="post-details-add-comment">
-    <textarea v-model="commentToAdd.content" ref="comment" rows="1" @keyup.enter="addComment" placeholder="Add a comment…"></textarea>
+    <textarea v-model="commentToAdd.content" class="comment-input" ref="comment" rows="1" @keydown.enter="addComment" placeholder="Add a comment…"></textarea>
     <button class="post-details-add-comment-btn">Post</button>
   </form>
 </template>
 
 <script>
+import {utilService} from '@/services/util-service.js';
+
 export default {
   name: "add-comment",
-  props:['post','user'],
+  props:['post','user', 'isUserDetails'],
   data(){
       return{
-        commentToAdd: { content: "", createdAt: Date.now() },
+        commentToAdd: { id: utilService.makeId(), content: "", createdAt: Date.now() },
       }
   },
   methods: {
@@ -22,6 +24,7 @@ export default {
         comment: commentCopy,
         postId: this.post._id,
         user: this.user,
+        isUserDetails: this.isUserDetails || false
       });
       this.commentToAdd = { content: "" };
     },

@@ -1,4 +1,4 @@
-# yugram
+# Instayul
 
 ## Project setup
 ```

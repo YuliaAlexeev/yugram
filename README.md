@@ -1,5 +1,7 @@
 # Instayul
 
+https://instayul.herokuapp.com/
+
 ## Project setup
 ```
 npm install

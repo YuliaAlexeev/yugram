@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     addCommentBtnClicked() {
-      document.querySelector('.comment-input').focus();
+      document.querySelectorAll('.comment-input').focus();
     },
     addLike() {
       this.$store.dispatch({

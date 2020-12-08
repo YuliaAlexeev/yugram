@@ -39,6 +39,7 @@ export const postStore = {
             const miniUser = {
                 _id: loggedUser._id,
                 userName: loggedUser.userName,
+                fullName: loggedUser.fullName,
                 imgUrl: loggedUser.imgUrl,
             };
             const userIsExist = state.posts[postIdx].likes.findIndex(
@@ -54,10 +55,6 @@ export const postStore = {
         setPostsOfUser(state, { userPosts }) {
             state.userPosts = userPosts;
         },
-        // removeComment(state, { commentId, postIdx }) {
-        //     state.posts[postIdx].comments.splice(commentId, 1);
-
-        // },
         addPost(state, { postToAdd }) {
             state.posts.push(postToAdd);
         },

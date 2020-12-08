@@ -1,7 +1,9 @@
 <template>
   <div class="post-row">
-    <span v-if="post.content" class="post-row-username">{{ post.by.userName }}</span>
-    {{ slicedContent }} <button class="show-full-content-btn" @click="isShowAllContent = !isShowAllContent" v-if="post.content.length > 100">{{ showMoreLess }}</button>
+    <span v-if="post.content" class="post-row-username">
+      <router-link :to="`/${post.by.userName}`">{{ post.by.userName }}</router-link>
+    </span>
+{{ slicedContent }} <button class="show-full-content-btn" @click="isShowAllContent = !isShowAllContent" v-if="post.content.length > 100">{{ showMoreLess }}</button>
   </div>
 </template>
 
